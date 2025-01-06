@@ -1,4 +1,4 @@
 main
-main.i
-main.s
-main.o
+*.i
+*.s
+*.o
