@@ -15,7 +15,7 @@ Lessons for c++ programming
 <h2 align="left"> Table of Contents </h2> 
 
 - [Lesson 1: Hello World, Build and Macros](#lesson-1-hello-world-build-and-macros)
-  - [building process](#building-process)
+  - [Building process](#building-process)
   - [Preprocessing:](#preprocessing)
   - [Compilation:](#compilation)
   - [Assembly:](#assembly)
@@ -28,11 +28,20 @@ Lessons for c++ programming
     - [Stack](#stack)
     - [Heap](#heap)
     - [Data Segment](#data-segment)
+- [Lesson 3: Structs, Const Variables and Pointers](#lesson-3-structs-const-variables-and-pointers)
+  - [Structs](#structs)
+    - [Declaration](#declaration)
+    - [Initializing Structs](#initializing-structs)
+    - [Accessing Members](#accessing-members)
+  - [Const variables](#const-variables)
+    - [variable](#variable)
+    - [Pointer to a Constant](#pointer-to-a-constant)
+    - [Constant pointer](#constant-pointer)
 
 
 # Lesson 1: Hello World, Build and Macros
 
-## building process
+## Building process
 
 The compilation process transforms C source code into machine code, enabling execution on hardware. There are four stages of compilation as shown in the picture:
 
@@ -199,3 +208,92 @@ Here is a summary of how variables are stored:
 <p align="left">
 <img src="https://github.com/user-attachments/assets/1b8cc433-9ef9-4042-be5e-284954c7e18f" alt="drawing" width="1000"/> 
 </p>
+
+
+
+
+# Lesson 3: Structs, Const Variables and Pointers
+
+## Structs
+A struct (short for "structure") is a user-defined data type that groups variables of different data types together into a single unit.
+
+### Declaration
+```cpp
+struct StructureName {
+    data_type member1;
+    data_type member2;
+    // ...
+};
+```
+
+**Example**
+```cpp
+struct Person {
+    int age;
+    string name;
+    double height;
+};
+```
+
+1. **Public members by default:** Unlike classes, struct members are public unless specified otherwise.
+2. **Data grouping:** Structs organize related variables together.
+3. **Function members:** Structs can have member functions.
+4. **Inheritance:** Structs can inherit from other structs or classes.
+
+### Initializing Structs
+
+1. Direct initialization: Person p = {25, "John", 1.75};
+2. Designated initialization (C++20): Person p = {.age = 25, .name = "John"};
+
+### Accessing Members
+
+1. Dot notation: p.age
+2. Pointer notation: (&p)->age or ptr->age
+
+## Const variables
+
+1. Immutable: Const variables cannot be changed after initialization.
+2. Read-only: Const variables can only be read, not written to.
+3. Compile-time checking: Attempts to modify const variables are caught during compilation.
+
+### variable
+```cpp
+    const int x = 5;
+    x = 3; //You get an error because it's read only;
+```
+
+### Pointer to a Constant
+
+That happens when the const comes before the `*` examples:
+
+```cpp
+    const int* ptr;
+    int const *ptr
+```
+
+In this case the value pointed to is constant. But the pointer itself can point to another address;
+
+```cpp
+    const int* ptr = new int(42);
+    *ptr = 3; //get an error because you cannot change the value of the pointer;
+    delete ptr;
+    ptr = new int(8); // it can point to a different address
+    delete ptr;
+```
+
+### Constant pointer
+That happens when the const comes after the `*` examples:
+
+```cpp
+    int* const ptr;
+```
+
+In this case the value pointed can be changed. But the pointer itself cannot point to another address;
+
+```cpp
+    int* const ptr = new int(42);
+    *ptr = 3; //You cannot change the value pointed to freely;
+    delete ptr;
+    ptr = new int(8); // it gets an error, because it cannot point to a different address;
+    delete ptr;
+```
