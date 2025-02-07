@@ -37,6 +37,12 @@ Lessons for c++ programming
     - [variable](#variable)
     - [Pointer to a Constant](#pointer-to-a-constant)
     - [Constant pointer](#constant-pointer)
+- [Lesson 4: Improving Makefile](#lesson-4-improving-makefile)
+  - [Basic Terms](#basic-terms)
+  - [Makefile Syntax](#makefile-syntax)
+  - [Adding pre-defined include paths in your Makefile](#adding-pre-defined-include-paths-in-your-makefile)
+  - [Variables](#variables)
+  - [Special Variables](#special-variables)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -264,7 +270,7 @@ struct Person {
 
 ### Pointer to a Constant
 
-That happens when the const comes before the `*` examples:
+That happens when the `const` comes before the `*` examples:
 
 ```cpp
     const int* ptr;
@@ -296,4 +302,92 @@ In this case the value pointed can be changed. But the pointer itself cannot poi
     delete ptr;
     ptr = new int(8); // it gets an error, because it cannot point to a different address;
     delete ptr;
+```
+
+# Lesson 4: Improving Makefile
+
+Common terms used in Makefiles:
+
+## Basic Terms
+
+1. Target: The file or goal to be built or generated.
+2. Dependency (or Prerequisite): Files required to build the target.
+3. Recipe (or Action): Commands to build the target.
+4. Rule: Combination of target, dependencies, and recipe.
+
+## Makefile Syntax
+
+1. Target: Starts with the target file name, followed by a colon (:).
+2. Dependencies: Listed after the target, separated by spaces.
+3. Recipe: Indented commands following the target and dependencies.
+Example:
+
+```sh
+target: dependency1 dependency2
+    recipe_command1
+    recipe_command2
+```
+
+## Adding pre-defined include paths in your Makefile
+
+That means that you do not need to include the entire path in every file
+
+```cpp
+    // If you predefine a path you can use
+    #include <config.h>
+    // Instead of
+    #include "include/config.h"
+```
+
+For doing that you have to add the g++ flag -I followed by the path you wanna include
+
+```sh
+    PATH = include
+    g++ -I$(PATH)-c src/lesson4.cpp -o lesson4.o
+```
+
+## Variables 
+
+Variables in Makefiles are defined using the = operator. Once a variable is set, you can use it throughout the Makefile by referencing its name.
+
+```sh
+    CC = g++
+    SRC_DIR = src
+    OBJ_DIR = obj
+    CFLAGS = -Iinclude
+```
+
+In this example:
+
+1. CC is a variable that defines the C++ compiler to be used.
+2. SRC_DIR indicates the directory where source files are located.
+3. OBJ_DIR specifies the directory for object files.
+4. CFLAGS contains compiler flags, such as including directory paths.
+
+To use a variable, enclose its name in parentheses or braces and prefix it with a dollar sign ($). There are two common forms:
+
+Variable Reference: 
+
+1. Uses parentheses, e.g., $(VAR_NAME).
+2. Uses braces, e.g., ${VAR_NAME}. This is particularly useful when the variable is followed by characters that might be interpreted as part of its name.
+
+Example:
+```sh
+    all: $(OBJ_DIR)/main.o $(OBJ_DIR)/utils.o
+    $(CC) -o my_program $(OBJ_DIR)/main.o $(OBJ_DIR)/utils.o $(CFLAGS)
+```
+
+## Special Variables
+
+1. $@: Target file name.
+2. $<: First dependency file name.
+3. $^: All dependency file names.
+4. $?: Dependencies newer than the target.
+5. %: A wildcard character used for pattern matching
+
+```sh
+# Compile all .c files to .o files:
+
+%.o: %.c
+    $(CC) -c $< -o $@
 ```

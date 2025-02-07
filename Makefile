@@ -1,14 +1,25 @@
-all: main.o lesson2.o lesson3.o
-	g++ main.o lesson2.o lesson3.o -o main
+#compiler
+CXX = g++
 
-lesson2.o: src/lesson2.cpp include/lesson2.h include/config.h 
-	g++ -c src/lesson2.cpp
+#Directories
+SRC_DIR = src
+INC_DIR = include
 
-lesson3.o: src/lesson3.cpp include/lesson3.h include/config.h 
-	g++ -c src/lesson3.cpp
+CFLAGS = -I$(INC_DIR)
 
-main.o: main.cpp include/config.h 
-	g++ -c main.cpp
+TARGET = main
+
+SRCS = $(wildcard $(SRC_DIR)/*.cpp)
+OBJS = $(patsubst src/%.cpp, %.o, $(SRCS))
+
+all: $(TARGET).o $(OBJS)
+	$(CXX) $(TARGET).o $(OBJS) -o $(TARGET)
+
+%.o : $(SRC_DIR)/%.cpp $(INC_DIR)/%.h $(INC_DIR)/config.h
+	$(CXX) $(CFLAGS) -c $< -o $@
+
+$(TARGET).o: $(TARGET).cpp $(INC_DIR)/config.h
+	$(CXX) $(CFLAGS) -c $(TARGET).cpp
 
 clean:
-	rm *.o *.i *.s main
+	rm *.o *.i *.s $(TARGET)

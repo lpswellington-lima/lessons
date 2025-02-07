@@ -1,6 +1,6 @@
 #include <iostream>
-#include "../include/lesson3.h"
-#include "../include/config.h"
+#include <lesson3.h>
+#include <config.h>
 
 using namespace std;
 
