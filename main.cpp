@@ -1,7 +1,7 @@
 #include <iostream>
-#include "include/config.h"
-#include "include/lesson2.h"
-#include "include/lesson3.h"
+#include <config.h>
+#include <lesson2.h>
+#include <lesson3.h>
 
 using namespace std;
 

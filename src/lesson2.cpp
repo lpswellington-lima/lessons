@@ -1,6 +1,6 @@
 #include <iostream>
-#include "../include/lesson2.h"
-#include "../include/config.h"
+#include <lesson2.h>
+#include <config.h>
 
 using namespace std;
 // declaring a global pointer for testing
