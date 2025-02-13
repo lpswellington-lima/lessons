@@ -43,6 +43,18 @@ Lessons for c++ programming
   - [Adding pre-defined include paths in your Makefile](#adding-pre-defined-include-paths-in-your-makefile)
   - [Variables](#variables)
   - [Special Variables](#special-variables)
+- [Lesson 5: Classes and Constant Functions](#lesson-5-classes-and-constant-functions)
+  - [Key Concepts:](#key-concepts)
+  - [Access Specifiers](#access-specifiers)
+  - [Class Declaration](#class-declaration)
+  - [Scope Resolution Operator](#scope-resolution-operator)
+  - [Constructor](#constructor)
+    - [Implicit Default Constructor:](#implicit-default-constructor)
+      - [Deleting the Default Constructor:](#deleting-the-default-constructor)
+    - [Initializer list](#initializer-list)
+  - [Getters and Setters](#getters-and-setters)
+    - [Const functions](#const-functions)
+    - [Function with a const parameter](#function-with-a-const-parameter)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -298,7 +310,7 @@ In this case the value pointed can be changed. But the pointer itself cannot poi
 
 ```cpp
     int* const ptr = new int(42);
-    *ptr = 3; //You cannot change the value pointed to freely;
+    *ptr = 3; //You can change the value pointed to freely;
     delete ptr;
     ptr = new int(8); // it gets an error, because it cannot point to a different address;
     delete ptr;
@@ -390,4 +402,118 @@ Example:
 
 %.o: %.c
     $(CC) -c $< -o $@
+```
+
+# Lesson 5: Classes and Constant Functions
+
+## Key Concepts:
+
+Classes in C++ are a fundamental part of object-oriented programming (OOP), allowing developers to create complex data types that represent real-world entities. A class provides a blueprint for creating objects (instances) and encapsulating data along with methods that operate on that data. 
+
+1. **Encapsulation:** Classes encapsulate data (attributes) and functions (methods) that operate on the data into a single unit. This protects the internal state of an object from unauthorized access and modification, usually by restricting visibility using access specifiers (private, protected, and public).
+
+## Access Specifiers
+1. **Public:** Members declared public are accessible from outside the class, allowing external code to view and modify these members.
+2. **Private:** Members declared private are only accessible from within the class itself. This restricts access to sensitive data and helps maintain control over how the data is modified.
+3. **Protected:** Members declared protected can be accessed in the class itself and by derived classes, but are not accessible from outside these classes.
+
+## Class Declaration
+
+A class in C++ is defined using the class keyword, followed by the class name and a set of curly braces containing its members.
+
+```cpp
+class ClassName {
+private:
+    // Attributes (data members)
+    int value = 10;
+public:
+    // Constructor(s)
+    ClassName();
+    // Methods (member functions)
+    void display();
+};
+```
+
+Not that this example keeps encapsulation of the class. The attributes are private, which can only be modified through a method
+
+## Scope Resolution Operator
+
+The :: operator in C++ is known as the scope resolution operator. It is used to define the context in which a name (like a variable, function, or class) is defined, allowing you to clarify which entity you are referring to, especially when there might be ambiguity or name conflicts. **When defining member functions outside of a class, the scope resolution operator is used to indicate that the function belongs to a specific class.**
+
+```cpp
+void ClassName::display() { // Here, :: is used to define the member function outside the class
+    std::cout << "Hello from MyClass!" << std::endl;
+}
+```
+
+## Constructor
+
+In C++, a constructor is a special member function that is automatically called when an object of a class is created.
+
+### Implicit Default Constructor:
+
+If you define no constructors in your class, the compiler provides a default constructor that initializes member variables (default initialization for built-in types and zero-initialization for objects of user-defined types).
+
+#### Deleting the Default Constructor:
+
+If you explicitly define any constructor, even if it's a parameterized constructor, the compiler will not generate the default constructor. In such cases, if you try to create an object without any arguments, it will result in a compilation error.
+
+That is how to fix that problem:
+```cpp
+class MyClass {
+public:
+    MyClass() = default; // Forces the compiler to generate a default constructor
+    // You can define other constructors here
+};
+```
+After that you can delete the explicit constructor and the compiler will use the default
+
+### Initializer list
+
+In C++, the colon (:) operator is used in the context of constructors to create an initializer list. An initializer list allows you to initialize member variables before the constructor's body is executed. This is particularly useful for several reasons, including efficiency, ordering of initialization, and directly initializing const and reference members.
+
+```cpp
+class ClassName {
+private:
+    int x;
+    const int y;
+    int& ref;
+
+public:
+    // Constructor using initializer list
+    ClassName(int val1, int val2) : x(val1), y(val2), ref(val2) {
+        // Constructor body (optional)
+    }
+};
+```
+
+## Getters and Setters
+
+**Getters:** Getters are methods that allow you to retrieve (get) the value of a private member variable from outside the class.
+**Setters:** Setters are methods that allow you to set (modify) the value of a private member variable from outside the class.
+
+Differently from constructors **you can not use initializer lists for setting variables**
+
+### Const functions
+
+In C++, const functions are member functions declared with the const keyword at the end of their declaration. This indicates that the function does not modify any member variables of the class. It is a good practice to use it for getters, since you wanna make sure that the return does not take any modifications throughout the function.
+
+Consider a class person that has an attribute named "name":
+```cpp
+// Getter for name
+std::string Person::getName() const {
+    // name = "wellington";  //You'll get an error cause const methods (or functions) can not modify the object parameters before returning them.
+    return name;
+}
+```
+
+### Function with a const parameter
+
+In C++, a function can take a const parameter to ensure that the argument passed to it cannot be modified within the function body. This is useful for enforcing immutability and providing read-only access to the input data. It is a good practice to use it for setters, since you wanna make sure that the value you are setting is not modified throughout the function.
+
+```cpp
+void Person::setName(const std::string& name) {
+    // name = "wellington"; //you can't do that cause the parameter is const, it can't be modified inside the function
+    this->name = name;
+}
 ```
