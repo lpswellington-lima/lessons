@@ -55,6 +55,14 @@ Lessons for c++ programming
   - [Getters and Setters](#getters-and-setters)
     - [Const functions](#const-functions)
     - [Function with a const parameter](#function-with-a-const-parameter)
+- [Lesson 6: Inheritance in C++](#lesson-6-inheritance-in-c)
+  - [Definition of Inheritance](#definition-of-inheritance)
+  - [Creating a Class That Inherits from Another Class](#creating-a-class-that-inherits-from-another-class)
+  - [How Constructor Reuse Works in Inheritance](#how-constructor-reuse-works-in-inheritance)
+  - [The virtual Keyword](#the-virtual-keyword)
+  - [The final Keyword](#the-final-keyword)
+    - [Final Class:](#final-class)
+    - [Final Method:](#final-method)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -517,3 +525,136 @@ void Person::setName(const std::string& name) {
     this->name = name;
 }
 ```
+
+# Lesson 6: Inheritance in C++
+
+## Definition of Inheritance
+
+Inheritance is a fundamental concept in object-oriented programming that allows one class (the derived class) to inherit properties and behaviors (attributes and methods) from another class (the base class). This mechanism promotes code reuse and establishes a hierarchical relationship between classes, enabling more organized and manageable code structures.
+
+## Creating a Class That Inherits from Another Class
+To create a class that inherits from another class in C++, you use the following syntax:
+
+```cpp
+class BaseClass {
+    // Base class members
+};
+
+class DerivedClass : public BaseClass {
+    // Derived class members
+};
+```
+In this example, DerivedClass inherits from BaseClass with public access. The derived class can access public and protected members of the base class.
+
+## How Constructor Reuse Works in Inheritance
+
+1. Calling Base Class Constructor:
+
+When a derived class is instantiated, the constructor of the base class is called automatically before executing the constructor of the derived class. If you want to pass parameters to the base class constructor, you can do so using an initializer list in the derived class constructor.
+
+2. Initializer List:
+
+This is a special syntax used to initialize base class members and derived class members directly. You can specify which base class constructor to call and pass the required arguments.
+
+```cpp
+#include <iostream>
+#include <string>
+
+class Animal {
+protected:
+    std::string name;
+
+public:
+    // Constructor for base class
+    Animal(const std::string& nameInput) : name(nameInput) {
+        std::cout << "Animal constructor called for " << name << std::endl;
+    }
+
+    void speak() const {
+        std::cout << name << " makes a sound." << std::endl;
+    }
+};
+
+class Dog : public Animal { // Dog inherits from Animal
+public:
+    // Constructor for derived class
+    Dog(const std::string& nameInput) : Animal(nameInput) { // Calling base class constructor
+        std::cout << "Dog constructor called for " << name << std::endl;
+    }
+
+    void bark() const {
+        std::cout << name << " barks!" << std::endl;
+    }
+};
+
+int main() {
+    Dog myDog("Buddy"); // Create an instance of Dog
+    myDog.speak();      // Calls the speak method from Animal
+    myDog.bark();       // Calls the bark method from Dog
+
+    return 0;
+}
+```
+
+## The virtual Keyword
+The virtual keyword is used in C++ to declare a method in a base class that can be overridden in derived classes. Declaring a method as virtual allows for polymorphism, enabling the program to call the correct method implementation based on the type of the object being referenced, rather than the type of the reference itself.
+
+Example:
+```cpp
+class Base {
+public:
+    virtual void show() { // Virtual function
+        std::cout << "Base class show()" << std::endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    void show() override { // Override the base class method
+        std::cout << "Derived class show()" << std::endl;
+    }
+};
+
+void display(Base* b) {
+    b->show(); // Calls the appropriate show() based on the object type
+}
+```
+
+In this case, if you create a Derived object and call display(&derivedObject), the output will be "Derived class show()" due to the use of the virtual keyword in the base class.
+
+## The final Keyword
+The final keyword is used in C++ to indicate that a class cannot be inherited from or that a virtual function cannot be overridden in derived classes. This helps to prevent further derivations or modifications, which can be useful to maintain specific behavior and integrity.
+
+Example:
+### Final Class:
+```cpp
+class Base {
+public:
+    virtual void show() {
+        std::cout << "Base class show()" << std::endl;
+    }
+};
+
+class Derived final : public Base { // Cannot inherit from Derived
+public:
+    void show() override {
+        std::cout << "Derived class show()" << std::endl;
+    }
+};
+// class AnotherDerived : public Derived {} // Error: Cannot derive from final class
+```
+### Final Method:
+```cpp
+class Base {
+public:
+    virtual void sound() final { // sound() cannot be overridden
+        std::cout << "Base sound!" << std::endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    // void sound() override { } // Error: cannot override final function
+};
+```
+In this example, the final keyword is used to prevent further inheritance from the Derived class or to prevent overriding the sound method in any derived classes.
