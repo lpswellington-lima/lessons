@@ -63,6 +63,11 @@ Lessons for c++ programming
   - [The final Keyword](#the-final-keyword)
     - [Final Class:](#final-class)
     - [Final Method:](#final-method)
+- [Lesson 7: Static Members in Classes](#lesson-7-static-members-in-classes)
+  - [Static Members](#static-members)
+  - [Calling Static Functions](#calling-static-functions)
+  - [Constructor Behavior with Inheritance](#constructor-behavior-with-inheritance)
+  - [Static Scope and Instance Independence](#static-scope-and-instance-independence)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -658,3 +663,47 @@ public:
 };
 ```
 In this example, the final keyword is used to prevent further inheritance from the Derived class or to prevent overriding the sound method in any derived classes.
+
+# Lesson 7: Static Members in Classes
+
+## Static Members
+
+Static members are shared across all instances of a class. They can be either static data members or static member functions.
+
+**Static Data Member:** A variable that is shared among all instances of a class. In our example, count is a static member that keeps track of how many objects of Counter and its derived classes are created.
+
+**Static Member Function:** A function that can be called on the class itself rather than on instances. It can access static members but not non-static members.
+
+```cpp
+class Counter {
+protected:
+    static int count; // Static data member
+
+public:
+    static void displayCount(); // Static member function
+};
+```
+
+## Calling Static Functions
+Static functions in the base class can be called without creating an instance of that class. You can also call them using an instance, but this is considered less clear.
+
+```cpp
+Counter::displayCount(); // Recommended way to call static function
+Counter c; 
+c.displayCount(); // Allowed, but not recommended
+```
+
+## Constructor Behavior with Inheritance
+
+When a derived class object is created, the constructor of the base class is automatically invoked before executing the derived class constructor. This ensures that the base class is properly initialized.
+
+```cpp
+Counter c1;      // Calls the Counter constructor
+Counter2 c2;     // Calls the Counter constructor again during Counter2 construction
+```
+
+## Static Scope and Instance Independence
+Static members, including static functions, are shared across all instances of the class. This behavior allows them to function independently of any specific object and maintains a consistent state across all instances.
+
+**Practical Implication:**
+Creating an instance of Counter increments the static count. Creating an instance of Counter2 also increments the same count because it inherits from Counter.
