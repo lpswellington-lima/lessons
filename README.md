@@ -68,6 +68,10 @@ Lessons for c++ programming
   - [Calling Static Functions](#calling-static-functions)
   - [Constructor Behavior with Inheritance](#constructor-behavior-with-inheritance)
   - [Static Scope and Instance Independence](#static-scope-and-instance-independence)
+- [Lesson 8: Private Inheritance](#lesson-8-private-inheritance)
+  - [Characteristics of Private Inheritance](#characteristics-of-private-inheritance)
+    - [Visibility:](#visibility)
+    - [Access Levels:](#access-levels)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -707,3 +711,17 @@ Static members, including static functions, are shared across all instances of t
 
 **Practical Implication:**
 Creating an instance of Counter increments the static count. Creating an instance of Counter2 also increments the same count because it inherits from Counter.
+
+# Lesson 8: Private Inheritance
+
+Private inheritance is a key concept in C++, often used to restrict access to the members of a base class from outside the scope of the derived class. Below, we'll explore private inheritance in more detail, including its mechanics, use cases, and implications.
+
+## Characteristics of Private Inheritance
+### Visibility:
+
+- When a class inherits from another class with private inheritance (e.g., class Derived : private Base), all public and protected members of the base class become private members of the derived class.
+- This means that those inherited members cannot be accessed directly by objects of the derived class outside of its member functions.
+### Access Levels:
+
+- The derived class can access the inherited members within its member functions but cannot expose them to the outside world.
+- This means that while you can call base class functions from within derived class methods, you cannot call them from outside the derived class or through its objects.
