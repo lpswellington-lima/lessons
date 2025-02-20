@@ -72,6 +72,9 @@ Lessons for c++ programming
   - [Characteristics of Private Inheritance](#characteristics-of-private-inheritance)
     - [Visibility:](#visibility)
     - [Access Levels:](#access-levels)
+- [Lesson 9: Protected Inheritance](#lesson-9-protected-inheritance)
+  - [Overview](#overview)
+  - [Key Points](#key-points)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -725,3 +728,11 @@ Private inheritance is a key concept in C++, often used to restrict access to th
 
 - The derived class can access the inherited members within its member functions but cannot expose them to the outside world.
 - This means that while you can call base class functions from within derived class methods, you cannot call them from outside the derived class or through its objects.
+
+# Lesson 9: Protected Inheritance
+## Overview
+Protected inheritance is a type of inheritance in C++ where the access level for the base class members changes when they are inherited by a derived class. Specifically, public and protected members of the base class become protected members of the derived class.
+
+## Key Points
+- When a derived class inherits from a base class using protected inheritance, all public and protected members from the base class become protected in the derived class.
+- Members inherited through protected inheritance are accessible from within the derived class and by further derived classes but are not accessible through objects of the derived class and are hidden from users of the derived class.
