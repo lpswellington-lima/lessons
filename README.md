@@ -75,6 +75,10 @@ Lessons for c++ programming
 - [Lesson 9: Protected Inheritance](#lesson-9-protected-inheritance)
   - [Overview](#overview)
   - [Key Points](#key-points)
+- [Lesson 10: Multiple Inheritance](#lesson-10-multiple-inheritance)
+  - [Ambiguity in Multiple Inheritance](#ambiguity-in-multiple-inheritance)
+  - [The Diamond Problem](#the-diamond-problem)
+  - [Virtual Inheritance](#virtual-inheritance)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -736,3 +740,106 @@ Protected inheritance is a type of inheritance in C++ where the access level for
 ## Key Points
 - When a derived class inherits from a base class using protected inheritance, all public and protected members from the base class become protected in the derived class.
 - Members inherited through protected inheritance are accessible from within the derived class and by further derived classes but are not accessible through objects of the derived class and are hidden from users of the derived class.
+
+# Lesson 10: Multiple Inheritance
+
+Multiple inheritance in C++ is a feature that allows a class (derived class) to inherit characteristics (attributes and methods) from more than one base class. This can be useful when you want to create a class that combines functionalities from various sources. However, it also introduces certain complexities that developers need to be cautious about, such as ambiguity and the diamond problem.
+
+1. Syntax:
+The syntax for multiple inheritance is straightforward. You can simply list the base classes separated by commas in the class declaration.
+```cpp
+class Derived : public Base1, public Base2 {
+};
+```
+2. Derived Class Access:
+In a derived class from multiple base classes, the derived class has access to all public and protected members of the base classes.
+
+3. Constructor Execution:
+When a derived class object is created, the constructors for the base classes are called in the order they are listed in the inheritance declaration.
+
+## Ambiguity in Multiple Inheritance
+While multiple inheritance can be powerful, it can also lead to ambiguity when two base classes have methods or attributes with the same name. Consider this example:
+
+```cpp
+    class A {
+public:
+    void show() {
+        cout << "Class A\n";
+    }
+};
+
+class B {
+public:
+    void show() {
+        cout << "Class B\n";
+    }
+};
+
+// Derived class from both A and B
+class C : public A, public B {
+};
+
+int main() {
+    C obj;
+
+    // obj.show(); // Error: Ambiguous call to show()
+
+    // To resolve ambiguity, you can specify which base class's method to call:
+    obj.A::show(); // Calls show() from class A
+    obj.B::show(); // Calls show() from class B
+
+    return 0;
+}
+```
+
+## The Diamond Problem
+The diamond problem is a specific case of ambiguity that arises when a class inherits from two classes that both inherit from a common base class. This can create issues with member access and lead to multiple instances of the base class.
+
+Here's a quick diagram of the diamond structure:
+
+```txt
+          A
+         / \
+        B   C
+         \ /
+          D
+```
+
+## Virtual Inheritance
+
+Virtual inheritance is a feature in C++ that addresses the "diamond problem" that occurs with multiple inheritance. The diamond problem arises when a class inherits from two classes that both derive from a common base class. This can lead to ambiguity regarding which instance of the base class should be accessed or even result in multiple copies of the base class being created.
+
+By using virtual inheritance, you ensure that only one instance of the common base class is created, regardless of how many classes inherit from it, thereby eliminating ambiguity.
+
+Key Features of Virtual Inheritance
+1. **Single Instance:** When a class uses virtual inheritance, it reduces multiple copies of the base class, ensuring that there is only one instance.
+2. **Constructor Call:** The constructor of the virtually inherited base class is called only once, even if it is inherited through multiple paths.
+3. **Access Control:** It preserves the access control of the base class members (public, protected, private).
+
+```cpp
+#include <iostream>
+using namespace std;
+
+class A { // Base class
+public:
+    void display() {
+        cout << "This is class A\n";
+    }
+};
+
+class B : virtual public A { // Virtual inheritance from A
+};
+
+class C : virtual public A { // Virtual inheritance from A
+};
+
+class D : public B, public C { // D inherits from B and C
+};
+
+int main() {
+    D d;
+    d.display(); // Calls method from class A, no ambiguity
+
+    return 0;
+}
+```
