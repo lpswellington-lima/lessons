@@ -79,6 +79,9 @@ Lessons for c++ programming
   - [Ambiguity in Multiple Inheritance](#ambiguity-in-multiple-inheritance)
   - [The Diamond Problem](#the-diamond-problem)
   - [Virtual Inheritance](#virtual-inheritance)
+- [Destructor](#destructor)
+  - [Key Features of Destructors in C++](#key-features-of-destructors-in-c)
+  - [Order of Destruction:](#order-of-destruction)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -843,3 +846,30 @@ int main() {
     return 0;
 }
 ```
+
+# Destructor
+
+A destructor is a special member function that is automatically called when an object is deleted from memory. The main purpose of a destructor is to release resources that the object may have acquired during its lifetime, such as dynamically allocated memory, file handles, or network connections.
+
+## Key Features of Destructors in C++
+
+1. **Syntax:** The destructor for a class is defined using the tilde (~) followed by the class name. It does not take any parameters and does not return a value.
+
+```cpp
+class MyClass {
+public:
+    ~MyClass(); // Destructor declaration
+};
+```
+
+2. **Automatic Invocation:** Destructors are invoked automatically when an object goes out of scope (for objects with automatic storage) or when the delete operator is called on an object (for dynamically allocated objects).
+
+3. **Single Destructor:** A class can have only one destructor. You cannot overload destructors based on parameters.
+
+4. **Virtual Destructors:** If a class is intended to be used as a base class, it is a good practice to declare its destructor as virtual. This ensures that the destructor of the derived class is called correctly when an object is deleted via a base class pointer.
+
+## Order of Destruction: 
+The order of destruction follows the reverse of construction:
+- Members of the derived class are destroyed first.
+- Then the destructor of the derived class is called.
+- Finally, the destructor of the base class is called.
