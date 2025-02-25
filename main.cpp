@@ -9,13 +9,14 @@
 //#include <lesson9.h>
 #include <lesson10.h>
 #include <lesson11.h>
+#include <lesson12.h>
 
 using namespace std;
 
 int main(int argc, char **argv) {
     //onExecute();
-    Lesson11 lesson;
-    lesson.onExecute();
+    Lesson* lesson = new Lesson12();
+    lesson->onExecute();
     
     return 0;
 }

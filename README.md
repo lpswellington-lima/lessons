@@ -82,6 +82,9 @@ Lessons for c++ programming
 - [Destructor](#destructor)
   - [Key Features of Destructors in C++](#key-features-of-destructors-in-c)
   - [Order of Destruction:](#order-of-destruction)
+- [Abstract Class](#abstract-class)
+  - [Characteristics of Abstract Classes](#characteristics-of-abstract-classes)
+  - [Practical Benefits of Using Abstract Classes](#practical-benefits-of-using-abstract-classes)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -873,3 +876,31 @@ The order of destruction follows the reverse of construction:
 - Members of the derived class are destroyed first.
 - Then the destructor of the derived class is called.
 - Finally, the destructor of the base class is called.
+
+
+# Abstract Class
+
+An abstract class in C++ is a class that cannot be instantiated on its own and is intended to be used as a base class for other derived classes. The main purpose of using an abstract class is to define an interface that derived classes must implement, enforcing a specific contract for behavior without providing a concrete implementation in the abstract class itself.
+
+## Characteristics of Abstract Classes
+
+1. Contains Pure Virtual Functions: An abstract class declares at least one pure virtual function. A pure virtual function is declared by assigning = 0 in its declaration. This signals that derived classes must provide an implementation for this function.
+
+```cpp
+class AbstractClass {
+public:
+    virtual void pureVirtualFunction() = 0; // Pure virtual function
+};
+```
+
+2. **Cannot be Instantiated:** You cannot create objects of an abstract class directly. This prevents the creation of instances that do not have complete functionality.
+
+3. **Derived Classes:** Any class that derives from an abstract class must implement all of its pure virtual functions to be instantiated. If a derived class does not implement all the pure virtual functions, it, too, becomes an abstract class.
+
+4. **Virtual Destructor:** If you intend to use the base class polymorphically (i.e., pointer/reference to the base class pointing to derived class objects), it is a good practice to declare a virtual destructor in the abstract class.
+
+## Practical Benefits of Using Abstract Classes
+
+- **Enforcing a Contract:** An abstract class defines a set of methods that any derived class must implement, ensuring that certain behaviors are guaranteed to be present.
+- **Code Reusability:** You can implement shared functionality in the abstract class while requiring derived classes to provide specialized behavior.
+- **Polymorphism:** Abstract classes enable polymorphic behavior, allowing you to work with derived classes through base class pointers or references.
