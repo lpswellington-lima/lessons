@@ -85,6 +85,9 @@ Lessons for c++ programming
 - [Abstract Class](#abstract-class)
   - [Characteristics of Abstract Classes](#characteristics-of-abstract-classes)
   - [Practical Benefits of Using Abstract Classes](#practical-benefits-of-using-abstract-classes)
+- [Lesson 13: Operator Overloading](#lesson-13-operator-overloading)
+  - [Operator Overloading with the operator Keyword](#operator-overloading-with-the-operator-keyword)
+  - [Syntax](#syntax)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -904,3 +907,19 @@ public:
 - **Enforcing a Contract:** An abstract class defines a set of methods that any derived class must implement, ensuring that certain behaviors are guaranteed to be present.
 - **Code Reusability:** You can implement shared functionality in the abstract class while requiring derived classes to provide specialized behavior.
 - **Polymorphism:** Abstract classes enable polymorphic behavior, allowing you to work with derived classes through base class pointers or references.
+
+# Lesson 13: Operator Overloading
+
+The `operator` keyword allows developers to define how operators work with user-defined types (classes). By overloading operators, you can enable intuitive operations on objects, allowing them to behave similarly to built-in types.
+
+## Operator Overloading with the operator Keyword
+
+When you overload an operator, you define a function that specifies how the operator behaves when applied to instances of your class. The syntax for defining an overloaded operator uses the operator keyword followed by the operator symbol.
+
+## Syntax
+The general syntax for operator overloading is as follows:
+```cpp
+ReturnType operator OperatorSymbol (Parameters) {
+    // Implementation
+}
+```
