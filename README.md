@@ -88,6 +88,11 @@ Lessons for c++ programming
 - [Lesson 13: Operator Overloading](#lesson-13-operator-overloading)
   - [Operator Overloading with the operator Keyword](#operator-overloading-with-the-operator-keyword)
   - [Syntax](#syntax)
+- [Lesson 14: Function Polymorphism](#lesson-14-function-polymorphism)
+  - [Types of Polymorphism](#types-of-polymorphism)
+    - [Compile-time Polymorphism](#compile-time-polymorphism)
+    - [Run-time Polymorphism](#run-time-polymorphism)
+  - [Key Points](#key-points-1)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -923,3 +928,66 @@ ReturnType operator OperatorSymbol (Parameters) {
     // Implementation
 }
 ```
+
+# Lesson 14: Function Polymorphism
+
+Polymorphism is a key feature of object-oriented programming in C++. It allows for functions to operate on different data types and to invoke the correct function based on the type of object passed to it. There are two main types of polymorphism in C++: compile-time (static) polymorphism and run-time (dynamic) polymorphism.
+
+## Types of Polymorphism
+
+### Compile-time Polymorphism
+
+This type of polymorphism is resolved during compilation. It can be achieved using:
+
+Function Overloading: Multiple functions with the same name but different parameters (number, type, or order).
+```cpp
+class Math {
+public:
+    int add(int a, int b) {
+        return a + b;
+    }
+    double add(double a, double b) {
+        return a + b;
+    }
+};
+```
+
+### Run-time Polymorphism
+
+Run-time polymorphism is resolved during program execution and is typically implemented using inheritance and virtual functions.
+
+Inheritance and Virtual Functions: The base class function is declared as virtual, allowing derived classes to override this function.
+
+```cpp
+class Base {
+public:
+    virtual void display() {
+        std::cout << "Display Base" << std::endl;
+    }
+};
+
+class Derived : public Base {
+public:
+    void display() override {
+        std::cout << "Display Derived" << std::endl;
+    }
+};
+
+void show(Base* obj) {
+    obj->display(); // Calls the appropriate display method
+}
+
+int main() {
+    Base b;
+    Derived d;
+
+    show(&b); // Output: Display Base
+    show(&d); // Output: Display Derived
+    return 0;
+}
+```
+
+## Key Points
+
+*Function Overloading* enables different functions with the same name to exist within the same scope, providing flexibility in function usage.
+*Virtual Functions*, when used with inheritance, allow a function to behave differently depending on the object that invokes it, providing the foundation for polymorphism in object-oriented design.
