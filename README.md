@@ -93,6 +93,10 @@ Lessons for c++ programming
     - [Compile-time Polymorphism](#compile-time-polymorphism)
     - [Run-time Polymorphism](#run-time-polymorphism)
   - [Key Points](#key-points-1)
+- [Lesson 15: Parameters by reference](#lesson-15-parameters-by-reference)
+  - [Passing by Value](#passing-by-value)
+  - [Passing by Reference](#passing-by-reference)
+  - [Summary of Differences](#summary-of-differences)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -991,3 +995,66 @@ int main() {
 
 *Function Overloading* enables different functions with the same name to exist within the same scope, providing flexibility in function usage.
 *Virtual Functions*, when used with inheritance, allow a function to behave differently depending on the object that invokes it, providing the foundation for polymorphism in object-oriented design.
+
+# Lesson 15: Parameters by reference
+
+## Passing by Value
+
+When you pass a parameter by value, a copy of the argument is made. Modifications made to the parameter inside the function do not affect the original argument.
+
+```cpp
+#include <iostream>
+
+void increment(int num) {
+    num++; // Increment the copy
+    std::cout << "Inside increment (by value): " << num << std::endl;
+}
+
+int main() {
+    int value = 5;
+    std::cout << "Before increment (by value): " << value << std::endl;
+    increment(value);
+    std::cout << "After increment (by value): " << value << std::endl;
+    return 0;
+    /* output:
+    Before increment (by value): 5
+    Inside increment (by value): 6
+    After increment (by value): 5
+    */
+}
+```
+
+## Passing by Reference
+
+When you pass a parameter by reference, you pass the actual memory location of the argument. This means that modifications made to the parameter inside the function affect the original argument.
+
+```cpp
+#include <iostream>
+
+void increment(int &num) {
+    num++; // Increment the original variable
+    std::cout << "Inside increment (by reference): " << num << std::endl;
+}
+
+int main() {
+    int value = 5;
+    std::cout << "Before increment (by reference): " << value << std::endl;
+    increment(value);
+    std::cout << "After increment (by reference): " << value << std::endl;
+    return 0;
+}
+/*
+Before increment (by reference): 5
+Inside increment (by reference): 6
+After increment (by reference): 6
+*/
+```
+
+## Summary of Differences
+
+| Feature	| Passing by Value	| Passing by Reference |
+| -------   | ----------------  | -------------------- |
+| Copy Creation	| Creates a new copy | No copy created (works on original) |
+| Modifications	 | Do not affect the original |	Affect the original |
+| Performance |	Slower for large objects (due to copying) | Generally faster (no copying) |
+| Syntax | void functionName(Type param) | void functionName(Type &param) |
