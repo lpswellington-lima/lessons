@@ -97,6 +97,11 @@ Lessons for c++ programming
   - [Passing by Value](#passing-by-value)
   - [Passing by Reference](#passing-by-reference)
   - [Summary of Differences](#summary-of-differences)
+- [Lambda Functions](#lambda-functions)
+  - [Syntax](#syntax-1)
+  - [Capturing Variables](#capturing-variables)
+    - [Capture Modes](#capture-modes)
+  - [Key Features of Lambda Functions](#key-features-of-lambda-functions)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -1058,3 +1063,41 @@ After increment (by reference): 6
 | Modifications	 | Do not affect the original |	Affect the original |
 | Performance |	Slower for large objects (due to copying) | Generally faster (no copying) |
 | Syntax | void functionName(Type param) | void functionName(Type &param) |
+
+# Lambda Functions
+
+Lambda functions in C++ are a powerful feature introduced in C++11 that allow you to define anonymous functions or function objects at runtime. They are primarily used for short, inline functions that are often passed as arguments to algorithms, callbacks, or thread execution, among other places. 
+
+## Syntax
+
+```cpp
+[ capture ] ( parameters ) -> return_type {
+    // function body
+}
+```
+* **Capture**: The capture clause defines which variables from the surrounding scope are accessible inside the lambda. You can specify captures by value or by reference.
+* **Parameters**: Just like regular functions, you can define parameters, which can be optional.
+* **Return type**: This is optional and can often be inferred by the compiler.
+* **Function body**: Contains the implementation of the function.
+
+## Capturing Variables
+
+You can capture variables from the surrounding scope using the capture clause:
+
+1. **By Value**: Copies the variable, read only.
+2. **By Reference**: Accesses the original variable and can be modified.
+
+### Capture Modes
+
+* **No capture**: []
+* **Capture by value**: [x] (makes a copy of variable x).
+* **Capture by reference**: [&x] (uses the original variable x).
+* **All by value**: [=] (captures all variables from the surrounding scope by value).
+* **All by reference**: [&] (captures all variables by reference).
+* **Mixed capture**: Combination of the above, e.g., [x, &y] (captures x by value and y by reference).
+
+## Key Features of Lambda Functions
+
+* **Anonymous**: Lambda functions do not require a name, which makes them especially useful for quick operations that are only needed once or in a limited scope.
+* **Capture**: Lambda functions can capture variables from their surrounding scope, allowing you to use local variables within the lambda body. Captures can be done by value or by reference.
+* **Parameters and Return Type**: Similar to regular functions, lambda functions can take parameters and specify a return type, although the return type can often be omitted as the compiler can deduce it.
