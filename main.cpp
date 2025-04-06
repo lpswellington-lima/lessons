@@ -14,12 +14,14 @@
 #include <lesson14.h>
 #include <lesson15.h>
 #include <lesson16.h>
+#include <lesson17.h>
+#include <lesson18.h>
 
 using namespace std;
 
 int main(int argc, char **argv) {
     //onExecute();
-    Lesson* lesson = new Lesson16();
+    Lesson* lesson = new Lesson17();
     lesson->onExecute();
     
     return 0;

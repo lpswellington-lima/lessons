@@ -97,11 +97,17 @@ Lessons for c++ programming
   - [Passing by Value](#passing-by-value)
   - [Passing by Reference](#passing-by-reference)
   - [Summary of Differences](#summary-of-differences)
-- [Lambda Functions](#lambda-functions)
+- [Lesson 16: Lambda Functions](#lesson-16-lambda-functions)
   - [Syntax](#syntax-1)
   - [Capturing Variables](#capturing-variables)
     - [Capture Modes](#capture-modes)
   - [Key Features of Lambda Functions](#key-features-of-lambda-functions)
+- [Lesson 17: Basics of Threads](#lesson-17-basics-of-threads)
+  - [What are Threads?](#what-are-threads)
+  - [Key Concepts](#key-concepts-1)
+  - [Thread Lifecycle](#thread-lifecycle)
+  - [How to Run a Thread in C++](#how-to-run-a-thread-in-c)
+  - [Joinable Threads](#joinable-threads)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -1064,7 +1070,7 @@ After increment (by reference): 6
 | Performance |	Slower for large objects (due to copying) | Generally faster (no copying) |
 | Syntax | void functionName(Type param) | void functionName(Type &param) |
 
-# Lambda Functions
+# Lesson 16: Lambda Functions
 
 Lambda functions in C++ are a powerful feature introduced in C++11 that allow you to define anonymous functions or function objects at runtime. They are primarily used for short, inline functions that are often passed as arguments to algorithms, callbacks, or thread execution, among other places. 
 
@@ -1101,3 +1107,59 @@ You can capture variables from the surrounding scope using the capture clause:
 * **Anonymous**: Lambda functions do not require a name, which makes them especially useful for quick operations that are only needed once or in a limited scope.
 * **Capture**: Lambda functions can capture variables from their surrounding scope, allowing you to use local variables within the lambda body. Captures can be done by value or by reference.
 * **Parameters and Return Type**: Similar to regular functions, lambda functions can take parameters and specify a return type, although the return type can often be omitted as the compiler can deduce it.
+
+# Lesson 17: Basics of Threads
+
+## What are Threads?
+
+In computing, a thread is the smallest unit of processing that can be scheduled by the operating system. Threads allow multiple sequences of instructions (threads of execution) to run concurrently within a single process. This means that a program can perform multiple tasks at the same time, which can improve the overall efficiency and responsiveness of applications, especially in modern multi-core processors.
+
+## Key Concepts
+* **Concurrency**: Threads enable a program to structure its operations to do multiple tasks at the same time, enhancing parallelism.
+* **Multithreading**: The programming technique of creating and managing multiple threads within a single application.
+* **Main Thread**: The default thread that runs when a program starts. Additional threads can be created to perform other tasks concurrently.
+Basic Theory
+
+When multiple threads share the same memory space, they can communicate more easily but must also sync access to shared resources to avoid conflicts and data corruption. This synchronization can be managed using mutexes, semaphores, or other concurrency control mechanisms.
+
+## Thread Lifecycle
+* **New**: The thread is created but not yet started.
+* **Runnable**: The thread is ready to run but the scheduler has not selected it to run.
+* **Blocked**: The thread is waiting for an event (like I/O) to occur.
+* **Terminated**: The thread has finished executing.
+
+## How to Run a Thread in C++
+To create and run a thread in C++, you typically use the <thread> library, which provides an easy interface for creating and managing threads.
+
+* Example Code
+Here’s a simple example demonstrating how to create and run a thread in C++:
+
+```cpp
+#include <iostream>
+#include <thread>
+
+// Function to be executed by the thread
+void threadFunction() {
+    std::cout << "Hello from the thread!" << std::endl;
+}
+
+int main() {
+    // Create a thread that runs the threadFunction
+    std::thread myThread(threadFunction);
+
+    // Check if the thread is joinable before joining
+    if (myThread.joinable()) {
+        myThread.join(); // Wait for the thread to finish
+    }
+
+    std::cout << "Thread has finished execution." << std::endl;
+    return 0;
+}
+```
+**Explanation of Key Functions**
+* std::thread: This is the class that allows you to create a new thread. The thread is started by passing a function (or callable object) to the constructor.
+* join(): This function blocks the current thread (usually the main thread) until the thread represented by myThread finishes execution. It's a way to ensure that your main thread waits for the child thread to complete.
+* joinable(): This function checks if the thread object is associated with a thread of execution. If a thread is created but not yet joined or detached, it's joinable.
+
+## Joinable Threads
+A thread is considered joinable if it has been successfully started but has not yet been joined or detached. Once a thread has terminated, it can no longer be joined; you can't join a thread more than once, nor can you join a thread that has been detached.
