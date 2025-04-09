@@ -108,6 +108,12 @@ Lessons for c++ programming
   - [Thread Lifecycle](#thread-lifecycle)
   - [How to Run a Thread in C++](#how-to-run-a-thread-in-c)
   - [Joinable Threads](#joinable-threads)
+- [Lesson 18: Race Condition and Mutex](#lesson-18-race-condition-and-mutex)
+  - [Understanding Race Condition](#understanding-race-condition)
+  - [How Mutex Solves Race Conditions](#how-mutex-solves-race-conditions)
+  - [Creating a Mutex in C++](#creating-a-mutex-in-c)
+  - [Locking and Unlocking Resources](#locking-and-unlocking-resources)
+  - [Differences Between lock\_guard and unique\_lock](#differences-between-lock_guard-and-unique_lock)
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -1163,3 +1169,71 @@ int main() {
 
 ## Joinable Threads
 A thread is considered joinable if it has been successfully started but has not yet been joined or detached. Once a thread has terminated, it can no longer be joined; you can't join a thread more than once, nor can you join a thread that has been detached.
+
+# Lesson 18: Race Condition and Mutex
+
+A mutex (short for "mutual exclusion") is a synchronization primitive that prevents multiple threads from accessing a shared resource simultaneously. This is crucial in multithreaded programming to avoid a situation called a race condition.
+
+## Understanding Race Condition
+A race condition occurs when multiple threads or processes access shared data concurrently, and at least one of the accesses is a write. This can lead to unpredictable results, bugs, or data corruption. For example, consider a shared counter that multiple threads are incrementing. If two threads read the counter's value simultaneously, they might both increment it based on the same initial value, resulting in a final count that is lower than expected.
+
+Example of Race Condition:
+
+* Thread A reads the value of the counter (let's say it’s 5).
+* Thread B also reads the counter while A hasn't finished writing back.
+* A increments it (now it’s 6) and writes it back.
+* B increments the original value (turning it into 6) and writes that back.
+* As a result, the final value of the counter is 6 instead of the expected 7.
+
+## How Mutex Solves Race Conditions
+A mutex allows only one thread to access a resource (like a variable or file) at any given time. When a thread locks a mutex, other threads that try to lock the same mutex are blocked until the mutex is unlocked. By serializing access to shared resources, mutexes help prevent race conditions and ensure data consistency.
+
+## Creating a Mutex in C++
+In C++, you can create a mutex using the std::mutex class from the <mutex> header. Here’s how to create a mutex:
+
+```cpp
+#include <mutex>
+
+std::mutex mtx; // Declare a mutex
+```
+
+## Locking and Unlocking Resources
+There are several methods for locking and unlocking a mutex, including:
+
+1. Manual Locking with lock() and unlock():
+
+You can explicitly call lock() to acquire the lock and unlock() to release it. This is the basic way of using a mutex.
+```cpp
+mtx.lock(); // Lock the mutex
+// Critical section
+mtx.unlock(); // Unlock the mutex
+ Caution: You must ensure that unlock() is always called, even if an exception occurs, to avoid deadlocks.
+```
+
+2. Using std::lock_guard:
+
+std::lock_guard provides a safer way to manage mutex locking. It locks the mutex upon creation and automatically unlocks it when it goes out of scope (RAII pattern).
+```cpp
+{
+    std::lock_guard<std::mutex> lock(mtx); // Locking the mutex
+    // Critical section
+} // Automatically unlocks when lock goes out of scope
+```
+3. Using std::unique_lock:
+
+std::unique_lock provides more flexibility than lock_guard. It can be locked and unlocked manually, allows deferred locking, and is compatible with condition variables.
+```cpp
+std::unique_lock<std::mutex> lock(mtx); // Lock the mutex
+// Critical section
+lock.unlock(); // Manual unlock if needed
+ Note: If lock is destroyed without an explicit unlock, the mutex will be unlocked automatically.
+```
+
+## Differences Between lock_guard and unique_lock
+| Feature	| std::lock_guard	| std::unique_lock |
+| -------   | ----------------  | -------------------- |
+| Locking Behavior	| Locks upon construction; unlocks on destruction |	Flexible; can be locked and unlocked manually |
+| Ownership	| Does not allow transfer of ownership	| Ownership can be transferred; supports move semantics |
+| Locking Options |	No deferred locking	| Supports deferred locking (std::defer_lock) |
+| Condition Variable Compatibility	| Limited support	| Fully compatible with condition variables |
+| Complexity	| Simple and straightforward	| More complex due to added functionality |
