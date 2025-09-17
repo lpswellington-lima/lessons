@@ -1237,3 +1237,11 @@ lock.unlock(); // Manual unlock if needed
 | Locking Options |	No deferred locking	| Supports deferred locking (std::defer_lock) |
 | Condition Variable Compatibility	| Limited support	| Fully compatible with condition variables |
 | Complexity	| Simple and straightforward	| More complex due to added functionality |
+
+# Lesson 19: Linked List Overview
+
+A linked list is a dynamic data structure consisting of nodes, where each node contains data and a pointer to the next node. Unlike arrays, linked lists do not require contiguous memory, allowing efficient insertions and deletions at arbitrary positions. This implementation includes common operations such as inserting at the head, tail, or specific positions, deleting nodes, checking if the list is empty, and printing all elements. Proper memory management is handled with destructors and copy operations to ensure no memory leaks or dangling pointers. Linked lists are fundamental for understanding more complex data structures and are widely used in various applications like stacks, queues, and associative data structures.
+
+<p align="left">
+<img src="https://private-user-images.githubusercontent.com/57189129/490507508-37e3115a-3542-4ff7-8676-ad4671347adb.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTgxMDc2MDIsIm5iZiI6MTc1ODEwNzMwMiwicGF0aCI6Ii81NzE4OTEyOS80OTA1MDc1MDgtMzdlMzExNWEtMzU0Mi00ZmY3LTg2NzYtYWQ0NjcxMzQ3YWRiLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MTclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTE3VDExMDgyMlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPThiZTI5OWI1MDM1MjIxMjUzNzA4NWQ1MTllNDY3MTFjN2JkZWNiNThmNGVhMjI5MzM3YzI5ZWM3YWU2YmNkODImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.xU8-HRwxZhRcIx0SDSAS49lpHeEo8E3U2sp6wFjlz3I" alt="drawing" width="812"/> 
+</p>
