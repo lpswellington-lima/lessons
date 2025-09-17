@@ -1245,3 +1245,44 @@ A linked list is a dynamic data structure consisting of nodes, where each node c
 <p align="left">
 <img src="https://private-user-images.githubusercontent.com/57189129/490507508-37e3115a-3542-4ff7-8676-ad4671347adb.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NTgxMDc2MDIsIm5iZiI6MTc1ODEwNzMwMiwicGF0aCI6Ii81NzE4OTEyOS80OTA1MDc1MDgtMzdlMzExNWEtMzU0Mi00ZmY3LTg2NzYtYWQ0NjcxMzQ3YWRiLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTA5MTclMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUwOTE3VDExMDgyMlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPThiZTI5OWI1MDM1MjIxMjUzNzA4NWQ1MTllNDY3MTFjN2JkZWNiNThmNGVhMjI5MzM3YzI5ZWM3YWU2YmNkODImWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.xU8-HRwxZhRcIx0SDSAS49lpHeEo8E3U2sp6wFjlz3I" alt="drawing" width="812"/> 
 </p>
+
+# Lesson 20: Templates in C++
+Templates in C++ enable writing generic and reusable code that works with any data type. They allow you to define functions and classes that are independent of specific types, making your code more flexible and reducing redundancy.
+
+## Function Templates:
+Define a generic function that can operate on different data types.
+Example:  
+
+```cpp
+template <typename T>
+T getMax(T a, T b) {
+    return (a > b) ? a : b;
+}
+```
+
+## Class Templates:
+Define a template class that can store or manipulate various data types.
+Example:  
+
+```cpp
+template <typename T>
+class MyContainer {
+private:
+    T value;
+public:
+    void set(T val) { value = val; }
+    T get() { return value; }
+};
+```
+
+## Compilation Process for Templates
+### Code Definition:
+Templates are usually defined in header files. When the compiler encounters a template class or function, it doesn't generate code immediately.
+
+### Instantiation:
+The actual code (called instantiation) is generated only when you create an object or call a function of a specific type, e.g., MyContainer<int> or getMax<double>.
+The compiler produces concrete versions of these templates for the specific types used.
+
+### Translation Units:
+Since templates are often defined in header files included in multiple source files, the compiler generates the instantiated code in each compilation unit that uses them.
+To avoid multiple definitions, the typical approach is to put the entire template implementation in header files, or explicitly instantiate templates in one source file.

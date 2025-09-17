@@ -17,13 +17,15 @@
 #include <lesson17.h>
 #include <lesson18.h>
 #include <lesson19.h>
+#include <lesson20.h>
 
 using namespace std;
 
 int main(int argc, char **argv) {
     //onExecute();
-    Lesson* lesson = new Lesson19();
+    Lesson* lesson = new Lesson20();
     lesson->onExecute();
+    delete lesson;
     
     return 0;
 }
