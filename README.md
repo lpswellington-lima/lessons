@@ -1286,3 +1286,76 @@ The compiler produces concrete versions of these templates for the specific type
 ### Translation Units:
 Since templates are often defined in header files included in multiple source files, the compiler generates the instantiated code in each compilation unit that uses them.
 To avoid multiple definitions, the typical approach is to put the entire template implementation in header files, or explicitly instantiate templates in one source file.
+
+# Lesson 21: Logical and Bitwise Operators
+
+## Logical Operators
+Logical operators are used to combine boolean expressions and evaluate to a boolean result (true or false):
+
+* && (AND): Returns true if both operands are true.
+Example: (a > 0) && (b < 10)
+* || (OR): Returns true if at least one operand is true.
+Example: (a > 0) || (b < 10)
+* ! (NOT): Inverts the boolean value.
+Example: !(a > 0) (true if a is not greater than 0)
+
+## Bitwise Operators
+Bitwise operators operate directly on the individual bits of integral types (like int, char, etc.):
+
+* `&` (AND): Performs AND on each bit.
+Example: 5 & 3 (binary 0101 & 0011 = 0001 which is 1)
+* `|` (OR): Performs OR on each bit.
+Example: 5 | 3 (binary 0101 | 0011 = 0111 which is 7)
+* `^` (XOR): Performs XOR on each bit.
+Example: 5 ^ 3 (binary 0101 ^ 0011 = 0110 which is 6)
+* `~` (COMPLEMENT): Flips all bits in the operand.
+Example: ~5 (binary 0101 becomes 1010 in binary, which is -6 in signed integers)
+* `<<` (Left shift): Shifts bits to the left, filling with zeros.
+Example: 3 << 2 (binary 0011 becomes 1100 which is 12)
+* `>>` (Right shift): Shifts bits to the right.
+Example: 12 >> 2 (binary 1100 becomes 0011 which is 3)
+Note: Bitwise operators are typically used for low-level programming, flags, and performance-critical code.
+
+## std::bitset in C++
+### Overview
+std::bitset is a container that manages a fixed-size sequence of bits. It provides a convenient way to work with individual bits efficiently, using high-level operations inspired by bitwise operators.
+
+### Common Features
+Fixed size specified at compile time.
+Supports bitwise operations (AND, OR, XOR, NOT).
+Allows setting, resetting, toggling, and testing individual bits.
+Can be converted to and from strings for easy display and input.
+
+### Basic Usage
+```cpp
+Copy
+#include <bitset>
+#include <iostream>
+
+int main() {
+    std::bitset<8> bits; // Creates an 8-bit bitset initialized to 0
+    bits.set(2);          // Set bit at position 2 (0-based from the right)
+    bits.flip(4);         // Toggle bit at position 4
+    std::cout << bits << std::endl; // Output: 00010100
+
+    // Check if a specific bit is set
+    if (bits.test(2)) {
+        std::cout << "Bit 2 is set." << std::endl;
+    }
+
+    // Convert to string
+    std::string bitString = bits.to_string();
+    std::cout << "Bitset as string: " << bitString << std::endl;
+
+    return 0;
+}
+```
+
+### Common Methods
+* set(pos): Set the bit at position pos to 1.
+* reset(pos): Reset the bit at position pos to 0.
+* flip(pos): Toggle the bit at position pos.
+* test(pos): Return true if bit at pos is 1.
+* to_string(): Convert the bitset to a string representation.
+* count(): Return the number of bits set to 1.
+* size(): Return the total size of the bitset.

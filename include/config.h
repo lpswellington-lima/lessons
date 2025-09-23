@@ -1,11 +1,14 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
+#include <string>
+
 #define PROGRAM_1
 #define PROGRAM_DETAILS
 
 #define PRINT(x) std::cout << x << "              | info  ---  file: " << __FILE__ << " line: " << __LINE__ << " Build at: " << __DATE__ << " "<<  __TIME__ << endl;
 #define PRINT_ERROR(x) std::cerr << x << "              | info  ---  file: " << __FILE__ << " line: " << __LINE__ << " Build at: " << __DATE__ << " "<<  __TIME__ << endl;
+#define INPUT(x, y) std::cout << x << endl; getline(std::cin, y);
 
 #ifdef PROGRAM_1
 #define HI "Hello World"
@@ -16,6 +19,15 @@
 class Lesson { 
     public:       
         virtual void onExecute() = 0;
+};
+
+class Exercise {
+    protected:
+        std::string question;
+    public:
+        Exercise(std::string question) : question(question){};       
+        virtual void onExecute() = 0;
+        virtual void printQuestion() = 0;
 };
 
 #endif
