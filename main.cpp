@@ -20,19 +20,15 @@
 #include <lesson20.h>
 #include <lesson21.h>
 #include <exercise1.h>
+#include <lesson22.h>
 
 using namespace std;
 
 int main(int argc, char **argv) {
     //onExecute();
-    Lesson* lesson = new Lesson21();
+    Lesson* lesson = new Lesson22();
     lesson->onExecute();
     delete lesson;
-
-    Exercise* exercise = new Exercise1("Given a string, reverse the order of the words. \n \n Example: \n Input: the sky is blue \n Output: blue is sky the");
-    exercise->printQuestion();
-    exercise->onExecute();
-    delete exercise;
     
     return 0;
 }

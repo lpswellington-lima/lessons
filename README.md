@@ -114,6 +114,27 @@ Lessons for c++ programming
   - [Creating a Mutex in C++](#creating-a-mutex-in-c)
   - [Locking and Unlocking Resources](#locking-and-unlocking-resources)
   - [Differences Between lock\_guard and unique\_lock](#differences-between-lock_guard-and-unique_lock)
+- [Lesson 19: Linked List Overview](#lesson-19-linked-list-overview)
+- [Lesson 20: Templates in C++](#lesson-20-templates-in-c)
+  - [Function Templates:](#function-templates)
+  - [Class Templates:](#class-templates)
+  - [Compilation Process for Templates](#compilation-process-for-templates)
+    - [Code Definition:](#code-definition)
+    - [Instantiation:](#instantiation)
+    - [Translation Units:](#translation-units)
+- [Lesson 21: Logical and Bitwise Operators](#lesson-21-logical-and-bitwise-operators)
+  - [Logical Operators](#logical-operators)
+  - [Bitwise Operators](#bitwise-operators)
+  - [std::bitset in C++](#stdbitset-in-c)
+    - [Overview](#overview-1)
+    - [Common Features](#common-features)
+    - [Basic Usage](#basic-usage)
+    - [Common Methods](#common-methods)
+- [Smart Pointers](#smart-pointers)
+  - [Types of Smart Pointers:](#types-of-smart-pointers)
+    - [std::unique\_ptr](#stdunique_ptr)
+    - [std::shared\_ptr](#stdshared_ptr)
+
 
 
 # Lesson 1: Hello World, Build and Macros
@@ -1359,3 +1380,32 @@ int main() {
 * to_string(): Convert the bitset to a string representation.
 * count(): Return the number of bits set to 1.
 * size(): Return the total size of the bitset.
+
+# Smart Pointers
+
+Smart pointers are objects in C++ that manage the lifetime of dynamically allocated memory automatically, helping to prevent memory leaks and dangling pointers. They resemble regular pointers but handle resource deallocation when the smart pointer goes out of scope.
+
+## Types of Smart Pointers:
+### std::unique_ptr
+Owns the resource exclusively.
+Cannot be copied, only moved.
+Automatically deletes the managed object when it goes out of scope.
+Use case: Unique ownership, when only one part of your program should own the resource.
+Example:
+
+```cpp
+#include <memory>
+std::unique_ptr<int> ptr = std::make_unique<int>(10);
+```
+### std::shared_ptr
+Allows multiple owners of the same resource.
+Uses reference counting to keep track of how many shared_ptrs point to the same object.
+Deletes the object when the last shared_ptr goes out of scope.
+Use case: Shared ownership scenarios.
+Example:
+
+```cpp
+#include <memory>
+std::shared_ptr<int> ptr1 = std::make_shared<int>(20);
+std::shared_ptr<int> ptr2 = ptr1; // both share ownership
+```
