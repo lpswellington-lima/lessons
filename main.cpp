@@ -21,12 +21,13 @@
 #include <lesson21.h>
 #include <exercise1.h>
 #include <lesson22.h>
+#include <lesson23.h>
 
 using namespace std;
 
 int main(int argc, char **argv) {
     //onExecute();
-    Lesson* lesson = new Lesson22();
+    Lesson* lesson = new Lesson23();
     lesson->onExecute();
     delete lesson;
     

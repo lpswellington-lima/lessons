@@ -130,10 +130,12 @@ Lessons for c++ programming
     - [Common Features](#common-features)
     - [Basic Usage](#basic-usage)
     - [Common Methods](#common-methods)
-- [Smart Pointers](#smart-pointers)
+- [Lesson 22: Smart Pointers](#lesson-22-smart-pointers)
   - [Types of Smart Pointers:](#types-of-smart-pointers)
     - [std::unique\_ptr](#stdunique_ptr)
     - [std::shared\_ptr](#stdshared_ptr)
+- [Lesson 23: Maps](#lesson-23-maps)
+  - [Key features of std::map:](#key-features-of-stdmap)
 
 
 
@@ -1381,7 +1383,7 @@ int main() {
 * count(): Return the number of bits set to 1.
 * size(): Return the total size of the bitset.
 
-# Smart Pointers
+# Lesson 22: Smart Pointers
 
 Smart pointers are objects in C++ that manage the lifetime of dynamically allocated memory automatically, helping to prevent memory leaks and dangling pointers. They resemble regular pointers but handle resource deallocation when the smart pointer goes out of scope.
 
@@ -1409,3 +1411,43 @@ Example:
 std::shared_ptr<int> ptr1 = std::make_shared<int>(20);
 std::shared_ptr<int> ptr2 = ptr1; // both share ownership
 ```
+
+# Lesson 23: Maps
+
+In C++, maps are part of the Standard Template Library (STL) and are used to store key-value pairs in an ordered manner. They are implemented as balanced binary search trees, typically red-black trees, which means they automatically sort the elements based on the keys.
+
+## Key features of std::map:
+
+* Stores pairs of keys and values.
+* Keys are unique; no duplicate keys are allowed.
+* Elements are stored in sorted order according to the key.
+* Provides efficient lookup, insertion, and deletion operations (logarithmic time complexity).
+
+```cpp
+#include <map>
+#include <iostream>
+
+int main() {
+    std::map<int, std::string> myMap;
+
+    // Insert elements
+    myMap[1] = "Apple";
+    myMap[2] = "Banana";
+
+    // Access elements
+    std::cout << myMap[1] << std::endl; // Output: Apple
+
+    // Iterate over the map
+    for (auto const &pair : myMap) {
+        std::cout << pair.first << ": " << pair.second << std::endl;
+    }
+
+    return 0;
+}
+```
+
+* insert() requires an existing object (like a pair).
+* emplace() constructs the object in-place, potentially more efficient.
+* find() to search for a key.
+* erase() to remove elements.
+* Access via operator[] or at().
